@@ -33,7 +33,12 @@ const Map = ({ eventData, center, zoom }) => {
       >
         {markers}
       </GoogleMapReact>
-      {locationInfo && <LocationInfoBox info={locationInfo} />}
+      {locationInfo && (
+        <LocationInfoBox
+          info={locationInfo}
+          onClick={() => setLocationInfo(null)}
+        />
+      )}
     </div>
   );
 };

@@ -33,6 +33,12 @@ body {
 .location-icon {
   font-size: 2rem;
   color: red;
+  cursor: pointer;
+  transition: 100ms font-size;
+}
+
+.location-icon:hover {
+  font-size: 2.2rem;
 }
 
 .loader {
@@ -69,4 +75,13 @@ body {
 
 .location-info li {
   padding: 5px 0;
+}
+
+.location-info-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
 }

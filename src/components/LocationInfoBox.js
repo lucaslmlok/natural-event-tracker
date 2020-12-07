@@ -1,9 +1,16 @@
 import React from "react";
+import { Icon } from "@iconify/react";
+import closeIcon from "@iconify/icons-mdi/close";
 
-const LocationInfoBox = ({ info }) => {
+const LocationInfoBox = ({ info, onClick }) => {
   return (
     <div className="location-info">
-      <h2>Event Location info</h2>
+      <Icon
+        icon={closeIcon}
+        className="location-info-close"
+        onClick={onClick}
+      />
+      <h2>Event Location Info</h2>
       <ul>
         <li>
           ID: <strong>{info.id}</strong>
