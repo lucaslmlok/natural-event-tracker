@@ -29,6 +29,8 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
+    "deploy": "netlify deploy --dir=build",
+    "deploy-prod": "netlify deploy --prod --dir=build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
