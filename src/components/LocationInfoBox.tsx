@@ -1,10 +1,13 @@
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import { Icon } from "@iconify/react";
 import closeIcon from "@iconify/icons-mdi/close";
+import { format, parseISO } from "date-fns";
+
+import { LocationInfo } from "./Map";
 
 type Props = {
-  info: { id: string; title: string };
-  onClick: any;
+  info: LocationInfo;
+  onClick: MouseEventHandler;
 };
 
 const LocationInfoBox = ({ info, onClick }: Props) => {
@@ -14,15 +17,11 @@ const LocationInfoBox = ({ info, onClick }: Props) => {
         <Icon icon={closeIcon} />
       </button>
 
-      <h2>Event Location Info</h2>
+      <h2 className="mb-2 font-bold text-2xl">{info.title}</h2>
 
       <ul>
-        <li>
-          ID: <strong>{info.id}</strong>
-        </li>
-        <li>
-          Title: <strong>{info.title}</strong>
-        </li>
+        <li>ID: {info.id}</li>
+        <li>Date: {format(parseISO(info.date), "dd MMM yyyy HH:mm:ss")}</li>
       </ul>
     </div>
   );

@@ -6,6 +6,11 @@ import Header from "./components/Header";
 
 const nasaApi = "https://eonet.sci.gsfc.nasa.gov/api/v2.1/events";
 
+const excludedCategories = Object.values({
+  volcanoes: 12,
+  sea_and_lake_ice: 15,
+});
+
 function App() {
   const [eventData, setEventData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,8 +20,11 @@ function App() {
       setLoading(true);
       const res = await fetch(nasaApi);
       const { events } = await res.json();
+      const filteredEvents = events.filter((ev) => {
+        return !excludedCategories.includes(ev.categories[0].id);
+      });
 
-      setEventData(events);
+      setEventData(filteredEvents);
       setLoading(false);
     };
     fetchEvents();

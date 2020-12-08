@@ -12,22 +12,32 @@ type Props = {
   zoom: number;
 };
 
+export type LocationInfo = {
+  id: string;
+  title: string;
+  date: string;
+};
+
 const Map = ({ eventData, center, zoom }: Props) => {
-  const [locationInfo, setLocationInfo] = useState<any>(null);
+  const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null);
 
   const markers = eventData.map((ev) => {
-    // is a wildfire?
-    if (ev.categories[0].id === 8) {
-      const [lng, lat] = ev.geometries[0].coordinates;
+    const category = ev.categories[0].id;
+
+    return ev.geometries.map((geo, geoIndex) => {
+      const [lng, lat] = geo.coordinates;
       return (
         <LocationMarker
+          key={`${ev.id}-${geoIndex}`}
           lat={lat}
           lng={lng}
-          key={ev.id}
-          onClick={() => setLocationInfo({ id: ev.id, title: ev.title })}
+          category={category}
+          onClick={() =>
+            setLocationInfo({ id: ev.id, title: ev.title, date: geo.date })
+          }
         />
       );
-    }
+    });
   });
 
   return (
