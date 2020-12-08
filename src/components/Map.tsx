@@ -4,10 +4,16 @@ import GoogleMapReact from "google-map-react";
 import LocationMarker from "./LocationMarker";
 import LocationInfoBox from "./LocationInfoBox";
 
-const googleApiKey = process.env.REACT_APP_GOOGLEP_API_KEY;
+const googleApiKey: string = process.env.REACT_APP_GOOGLEP_API_KEY!;
 
-const Map = ({ eventData, center, zoom }) => {
-  const [locationInfo, setLocationInfo] = useState(null);
+type Props = {
+  eventData: any[];
+  center: GoogleMapReact.Coords;
+  zoom: number;
+};
+
+const Map = ({ eventData, center, zoom }: Props) => {
+  const [locationInfo, setLocationInfo] = useState<any>(null);
 
   const markers = eventData.map((ev) => {
     // is a wildfire?
