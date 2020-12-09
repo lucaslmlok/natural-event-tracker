@@ -1,27 +1,26 @@
-import { useState } from "react";
+import { Dispatch } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import GoogleMapReact from "google-map-react";
 
 import LocationMarker from "./LocationMarker";
 import LocationInfoBox from "./LocationInfoBox";
+import * as ReduxActions from "../store/actionCreator";
+import CategoryBadge from "./CategoryBadge";
 
 const googleApiKey: string = process.env.REACT_APP_GOOGLEP_API_KEY!;
 
 type Props = {
-  eventData: any[];
   center: GoogleMapReact.Coords;
   zoom: number;
 };
 
-export type LocationInfo = {
-  id: string;
-  title: string;
-  date: string;
-};
+const Map = ({ center, zoom }: Props) => {
+  const dispatch: Dispatch<any> = useDispatch();
+  const { filteredEvents, selectedEvent, eventCategories } = useSelector(
+    (state: ReduxState) => state
+  );
 
-const Map = ({ eventData, center, zoom }: Props) => {
-  const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null);
-
-  const markers = eventData.map((ev) => {
+  const markers = filteredEvents.map((ev) => {
     const category = ev.categories[0].id;
 
     return ev.geometries.map((geo, geoIndex) => {
@@ -33,7 +32,13 @@ const Map = ({ eventData, center, zoom }: Props) => {
           lng={lng}
           category={category}
           onClick={() =>
-            setLocationInfo({ id: ev.id, title: ev.title, date: geo.date })
+            dispatch(
+              ReduxActions.selectEvent({
+                id: ev.id,
+                title: ev.title,
+                date: geo.date,
+              })
+            )
           }
         />
       );
@@ -49,12 +54,14 @@ const Map = ({ eventData, center, zoom }: Props) => {
       >
         {markers}
       </GoogleMapReact>
-      {locationInfo && (
-        <LocationInfoBox
-          info={locationInfo}
-          onClick={() => setLocationInfo(null)}
-        />
-      )}
+      {/* {categories} */}
+      <div className="absolute top-16 left-0 w-full flex justify-start p-2">
+        <CategoryBadge id={null} title="Show All" />
+        {eventCategories.map((cat) => (
+          <CategoryBadge id={cat.id} title={cat.title} />
+        ))}
+      </div>
+      {selectedEvent && <LocationInfoBox />}
     </div>
   );
 };

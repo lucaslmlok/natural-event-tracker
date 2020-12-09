@@ -1,27 +1,35 @@
-import { MouseEventHandler } from "react";
+import { Dispatch } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import closeIcon from "@iconify/icons-mdi/close";
 import { format, parseISO } from "date-fns";
 
-import { LocationInfo } from "./Map";
+import * as ReduxActions from "../store/actionCreator";
 
-type Props = {
-  info: LocationInfo;
-  onClick: MouseEventHandler;
-};
+const LocationInfoBox = () => {
+  const dispatch: Dispatch<any> = useDispatch();
+  const { selectedEvent } = useSelector((state: ReduxState) => state);
 
-const LocationInfoBox = ({ info, onClick }: Props) => {
+  if (!selectedEvent) return null;
+
   return (
     <div className="location-info">
-      <button className="location-info-close" onClick={onClick}>
+      <button
+        className="location-info-close"
+        onClick={() => {
+          dispatch(ReduxActions.unselectEvent());
+        }}
+      >
         <Icon icon={closeIcon} />
       </button>
 
-      <h2 className="mb-2 font-bold text-2xl">{info.title}</h2>
+      <h2 className="mb-2 font-bold text-2xl">{selectedEvent.title}</h2>
 
       <ul>
-        <li>ID: {info.id}</li>
-        <li>Date: {format(parseISO(info.date), "dd MMM yyyy HH:mm:ss")}</li>
+        <li>ID: {selectedEvent.id}</li>
+        <li>
+          Date: {format(parseISO(selectedEvent.date), "dd MMM yyyy HH:mm:ss")}
+        </li>
       </ul>
     </div>
   );
