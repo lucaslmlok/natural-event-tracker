@@ -18,8 +18,6 @@ body {
 
 .header {
   padding: 10px;
-  background-color: firebrick;
-  color: white;
   position: fixed;
   top: 0;
   left: 0;
@@ -32,16 +30,6 @@ body {
   padding: 0;
   margin: 0;
   text-align: center;
-}
-
-.location-icon {
-  font-size: 2rem;
-  cursor: pointer;
-  transition: 100ms font-size;
-}
-
-.location-icon:hover {
-  font-size: 2.2rem;
 }
 
 .loader {

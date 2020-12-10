@@ -26,13 +26,13 @@ const getIcon = (category: number): { icon: any; color: string } => {
 const LocationMarker = ({ lat, lng, category, onClick }: Props) => {
   const { icon, color } = getIcon(category);
 
-  if (icon === Unknown) {
-    console.log("here");
-  }
-
   return (
     <div className="location-marker" onClick={onClick}>
-      <Icon icon={icon} className="location-icon" style={{ color: color }} />
+      <Icon
+        icon={icon}
+        className="text-4xl cursor-pointer transform -translate-x-2/4 -translate-y-2/4 transition hover:scale-125"
+        style={{ color: color }}
+      />
     </div>
   );
 };
