@@ -2,7 +2,7 @@
 
 ### URL
 
-You can visit the website at https://lucas-wildfire-tracker.netlify.app.
+You can visit the website at https://lucas-natural-event-tracker.netlify.app/.
 
 ### Tech
 
