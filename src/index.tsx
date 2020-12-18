@@ -5,6 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import App from "./App";
 import reducer from "./store/reducer";

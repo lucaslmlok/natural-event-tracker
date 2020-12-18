@@ -1,4 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
+import { timeout } from "../utils/functions";
 
 import * as actionTypes from "./actionTypes";
 
@@ -40,6 +41,7 @@ const getAllEventCategories = (events: Event[]) => {
 export const selectCategory = (category: EventCategory | null) => {
   return (dispatch: DispatchType, getState: () => ReduxState) => {
     const allEvents = cloneDeep(getState().allEvents);
+    const { selectedEvent } = getState();
 
     const filteredEvents = allEvents.filter((ev) => {
       if (!category) return true;
@@ -51,20 +53,42 @@ export const selectCategory = (category: EventCategory | null) => {
       type: actionTypes.SELECT_CATEGORY,
       payload: { selectedCategory: category, filteredEvents },
     });
+
+    if (
+      category &&
+      selectedEvent &&
+      selectedEvent.categoryId !== category?.id
+    ) {
+      dispatch({ type: actionTypes.CLOSE_INFO_BOX });
+    }
   };
 };
 
 export const selectEvent = (info: LocationInfo) => {
-  return {
-    type: actionTypes.SELECT_EVENT,
-    payload: {
-      selectedEvent: info,
-    },
+  return async (dispatch: DispatchType, getState: () => ReduxState) => {
+    const { infoBoxActive, selectedEvent } = getState();
+
+    if (
+      selectedEvent &&
+      selectedEvent.id === info.id &&
+      selectedEvent.date === info.date
+    ) {
+      return;
+    }
+
+    if (infoBoxActive) {
+      dispatch({ type: actionTypes.CLOSE_INFO_BOX });
+      await timeout(300);
+    }
+    dispatch({
+      type: actionTypes.SELECT_EVENT,
+      payload: info,
+    });
+    await timeout(100);
+    dispatch({ type: actionTypes.OPEN_INFO_BOX });
   };
 };
 
-export const unselectEvent = () => {
-  return {
-    type: actionTypes.UNSELECT_EVENT,
-  };
+export const setMyLocation = ({ lat, lng }) => {
+  return { type: actionTypes.SET_MY_LOCATION, payload: { lat, lng } };
 };

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,30 +6,27 @@
 
 body {
   margin: 0;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-family: "Mulish", Arial, Helvetica, sans-serif;
   overflow: hidden;
+}
+
+a {
+  color: #007185;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.Toastify__toast--dark {
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 1rem;
 }
 
 .map {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 64px);
   position: relative;
-}
-
-.header {
-  padding: 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
-.header h1 {
-  font-size: 25px;
-  padding: 0;
-  margin: 0;
-  text-align: center;
 }
 
 .loader {
@@ -46,31 +43,57 @@ body {
   font-size: 36px;
 }
 
-.location-info {
-  position: absolute;
-  top: 80px;
-  right: 30px;
-  width: 400px;
-  min-height: 200px;
-  padding: 25px 20px 20px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
-  font-size: 18px;
-  color: white;
-}
-
-.location-info ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.location-info li {
-  padding: 5px 0;
-}
-
-.location-info-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.marker {
+  position: relative;
   cursor: pointer;
+  width: 3.2rem;
+  height: 3.2rem;
+  transform: translate(-25px, -50px);
+}
+
+.marker-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 1.3rem;
+  top: 10px;
+}
+
+.custom-badge {
+  display: inline-block;
+  border: 2px solid white;
+  border-radius: 9999px;
+  margin: 0 0.25rem;
+  padding: 0.3rem 0.75rem;
+}
+
+.badge-icon {
+  display: inline-block;
+  font-size: 1.4rem;
+  transform: translate(-3px, -1px);
+}
+
+.location-info-box {
+  width: 100%;
+}
+
+@layer components {
+  .info-list-item {
+    @apply flex my-4 items-start;
+  }
+
+  .info-list-icon {
+    @apply text-2xl mr-3;
+  }
+
+  .info-list-content {
+    @apply font-medium flex-1;
+  }
+}
+
+@media (min-width: 640px) {
+  .location-info-box {
+    width: 640px;
+  }
 }
